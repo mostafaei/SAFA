@@ -21,7 +21,7 @@ import json
 import random
 import copy
 
-## Delay Calculation Among Nodes for TopologyZoo Networks
+
 class Graph:
     def __init__(self,graphName, g):
         self.graphName = graphName
@@ -118,6 +118,7 @@ class Graph:
                 longitude_src= math.radians(float(id_longitude_dict[e[0]]))
                 longitude_dst= math.radians(float(id_longitude_dict[e[1]]))
 
+
                 first_product               = math.sin(latitude_dst) * math.sin(latitude_src)
                 second_product_first_part   = math.cos(latitude_dst) * math.cos(latitude_src)
                 second_product_second_part  = math.cos(longitude_dst - longitude_src)
@@ -126,17 +127,20 @@ class Graph:
                 # t (in ms) = ( distance in km * 1000 (for meters) ) / ( speed of light / 1000 (for ms))
                 # t         = ( distance       * 1000              ) / ( 1.97 * 10**8   / 1000         )
                 latency = ( distance * 1000 ) / ( 197000 )
+                #print( "latency:", round(latency,2))
                 self.g[e[0]][e[1]]['latency']=round(latency,2) 
+
         return self.g
 
 
-## Select the Starting Node with Max Num of Neighbors
+
+
 class getFirstNode:
 
     def __init__(self, g):
         self.g = g
         
-    
+    #Select the Starting Node with Max Num of Neighbors
     def firstNodeDCM(self):
         nodes=list(self.g.nodes)
         lst_nodes_avg_wgt = pd.DataFrame()
@@ -149,7 +153,10 @@ class getFirstNode:
                 count+=1          
             lst_nodes_avg_wgt = lst_nodes_avg_wgt.append({"node": node, "latency": sum/count}, ignore_index=True)   
             lst = lst_nodes_avg_wgt[lst_nodes_avg_wgt.latency == lst_nodes_avg_wgt.latency.min()]
+        #lst.reset_index(drop=True)
+        #print(lst_nodes_avg_wgt)
         min_wgt_node = lst.iloc[0]
+        #print("minDCM: ", min_wgt_node)
         return min_wgt_node
     
     def firstNodeECM(self):
@@ -167,13 +174,17 @@ class getFirstNode:
             lst_node_neighbors = lst_node_neighbors.append({"node": node, "nodeCount": count, "rank1": rank}, ignore_index=True)
             lst = lst_node_neighbors[lst_node_neighbors.rank1 == lst_node_neighbors.rank1.max()]
         max_wgt_node = lst.iloc[0]
+        #print("minECM: ", max_wgt_node)
         return max_wgt_node
 
 
-## JSON File Topology for P4
-class jsonFile:
+# In[4]:
 
-    def __init__(self, g, Final_graph, path):
+#JSON File Topology for P4
+
+class jsonFile:
+    
+    def __init__(self, g, Final_graph,  path):
         self.g = g
         self.path= path
         self.Final_graph = Final_graph
@@ -312,13 +323,16 @@ class jsonFile:
                 json.dump(Final_List, outfile)
 
 
-## Alogrithm for Selecting Subset of Node Cluster
+# In[5]:
+
+
 class nodeSubset:
     
     def __init__(self, Num_Of_Nodes, startNode,g):
         self.Num_Of_Nodes = Num_Of_Nodes
         self.startNode = startNode
         self.g = g
+# Alogrithm for Selecting Subset of Node Cluster
     def subSet_of_Nodes(self):
         firstnode = self.startNode
         currentnode = firstnode
@@ -376,7 +390,7 @@ class nodeSubset:
         return lst_VisitedNodes
 
 
-## Get paramter data from the Graph Topology
+
 class getData:
     
     def getAvgDelay(g, path_final, Final_graph):
@@ -429,6 +443,7 @@ class getData:
         for edge in sub_graph.edges(data=True):
             lat= edge[2]['bw']
             lst.append(lat)
+            #sum+=lat
         return (min(lst))
 
     def hop(g, path_final):
@@ -446,7 +461,7 @@ class getData:
         return sum_num
 
 
-## Print paramter data of the Graph Topology
+
 class printData:
     
     def __init__(self, g, reqNodes, startNode, final_path, Final_graph):
@@ -462,6 +477,7 @@ class printData:
         min_delay_value = min(AvgDelay)
         max_delay_value = max(AvgDelay)
 
+        '''
         #BW Calculation
         AvgBW=list(getData.getAvgBW(g, final_path, Final_graph))
         avg_bw_value = round(getData.sum_list(AvgBW)/len(AvgBW),2)
@@ -473,16 +489,17 @@ class printData:
         avg_cost_value = round(getData.sum_list(AvgCost)/len(AvgCost),2)
         min_cost_value = min(AvgCost)
         max_cost_value = max(AvgCost)
-
+        '''
 
         #No. of Hop Calculation
         Hop_No = getData.hop(g, final_path)
+        #print('len of Hop list: ', len(Hop_No))
         avg_hop_value = round(getData.sum_list(Hop_No)/len(Hop_No),2)
         min_hop_value = min(Hop_No)
         max_hop_value = max(Hop_No)
 
         #Results Output
-        print('The Required Subset of Nodes:', self.reqNodes+1)
+        print('The Required Subset of Nodes:', self.reqNodes)
         print('Selected Starting Node is: ', self.startNode)
         print('list of Selected Subset of Nodes: ', self.final_path)
         print(' ')
@@ -491,6 +508,8 @@ class printData:
         print('The max latency value in selected subset:', max_delay_value)
         print('The avg latency value in selected subset:', avg_delay_value)
         print(' ')
+        
+        '''
         print('List of BW', AvgBW)
         print('The min bw value in selected subset:', min_bw_value)
         print('The max bw value in selected subset:', max_bw_value)
@@ -502,15 +521,20 @@ class printData:
         print('The avg cost value in selected subset:', avg_cost_value)
         print('sum of the cost in selected subset:', round(getData.sum_list(AvgCost),2))
         print(' ')
+        '''
+        
         print('List of hops', Hop_No)
         print('The min no. of hops traversed in selected subset:', min_hop_value)
         print('The max no. of hops traversed in selected subset:', max_hop_value)
         print('The avg no. of hops traversed in selected subset:', avg_hop_value)
         print(' ')
 
+        #Print the path of selected nodes
+        #print (result)
 
-## Get Average Delay of the Selected Nodes:
-## Result of the required Subset of nodes (DCM)
+
+#Get Average Delay of the Selected Nodes:
+#Result of the required Subset of nodes (DCM)
 def DCM(n,g):
     req_nodeSubset=int(n)
     startNode=getFirstNode(g)
@@ -527,13 +551,11 @@ def DCM(n,g):
 
     #Provide dir. path to save JSON files for P4
     path=str('JsonFiles/')
-    topoJSON=jsonFile(g, Final_graph,path)
+    topoJSON=jsonFile(g, Final_graph, path)
     topo=topoJSON.topologyJSON()
     switchRule=topoJSON.switchJSON()
-
-    # "result" shows path of visited nodes
     #print (result)  
-  
+
 
 def main():
     #Select a graph from TopoloyZoo
@@ -548,17 +570,7 @@ def main():
     DCM(x,g)
 
     
-#     #Graph Representation of %s topology' % (topo)
-#     pos = nx.kamada_kawai_layout(g)
-#     edge_labels = nx.get_edge_attributes(g, 'latency')
-#     plt.figure(figsize=(12, 10))
-#     nx.draw_networkx_nodes(g,  pos, node_size=300, label=1)
-#     nx.draw_networkx_edges(g, pos, width=2, edge_color='black')
-#     nx.draw_networkx_edge_labels(g, pos, edge_labels=edge_labels, font_size=9)
-#     nx.draw_networkx_labels(g, pos, font_size=12)
-#     plt.title('Graph Representation of %s topology' % (topo) )
-#     plt.show()
-
     
 if __name__ == '__main__':
       main()
+
