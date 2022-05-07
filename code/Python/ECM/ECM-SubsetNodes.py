@@ -532,9 +532,8 @@ def ECM(n,g):
     switchRule=topoJSON.switchJSON()
 
     # "result" shows path of visited nodes
-    #print (result)  
-
-
+    #print (result)
+    
 def main():
     #Select a graph from TopoloyZoo
     name_arg= sys.argv[1]
@@ -546,6 +545,9 @@ def main():
     g = Graph(topo, g)
     g = g.read_graph()  
     ECM(x,g)
+
+
+
 
 
 #     #Graph Representation of %s topology' % (topo)
