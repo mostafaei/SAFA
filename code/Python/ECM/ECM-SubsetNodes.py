@@ -20,6 +20,7 @@ import subprocess
 import json
 import random
 import copy
+import time
 
 ## Delay Calculation Among Nodes for TopologyZoo Networks
 class Graph:
@@ -516,8 +517,12 @@ def ECM(n,g):
     startNode=getFirstNode(g)
     startNode=startNode.firstNodeECM().node
     print("startNodeECM:", startNode)
+    start_t=time.time()
     listNodes=nodeSubset(req_nodeSubset,startNode,g)
     result=listNodes.subSet_of_Nodes()
+    end_t=time.time()
+    run_t = ((end_t - start_t )* 1000)
+    print("running time", round(run_t , 3), "ms") # round(time.time() * 1000
     final_path=list(result.iloc[-1].tail(2).head(1))
     final_path=final_path[0]
     final_path=final_path.split(",")
