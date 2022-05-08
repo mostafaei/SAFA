@@ -180,9 +180,15 @@ class getFirstNode:
 
 
 # In[4]:
+<<<<<<< HEAD
 
 #JSON File Topology for P4
 
+=======
+
+#JSON File Topology for P4
+
+>>>>>>> 2b8d5b00c604e163c98190c3ea863435261a524f
 class jsonFile:
     
     def __init__(self, g, Final_graph,  path):
@@ -478,7 +484,11 @@ class printData:
         min_delay_value = min(AvgDelay)
         max_delay_value = max(AvgDelay)
 
+<<<<<<< HEAD
         
+=======
+        '''
+>>>>>>> 2b8d5b00c604e163c98190c3ea863435261a524f
         #BW Calculation
         AvgBW=list(getData.getAvgBW(g, final_path, Final_graph))
         avg_bw_value = round(getData.sum_list(AvgBW)/len(AvgBW),2)
@@ -490,10 +500,15 @@ class printData:
         avg_cost_value = round(getData.sum_list(AvgCost)/len(AvgCost),2)
         min_cost_value = min(AvgCost)
         max_cost_value = max(AvgCost)
+<<<<<<< HEAD
         
+=======
+        '''
+>>>>>>> 2b8d5b00c604e163c98190c3ea863435261a524f
 
         #No. of Hop Calculation
         Hop_No = getData.hop(g, final_path)
+        #print('len of Hop list: ', len(Hop_No))
         avg_hop_value = round(getData.sum_list(Hop_No)/len(Hop_No),2)
         min_hop_value = min(Hop_No)
         max_hop_value = max(Hop_No)
@@ -508,6 +523,8 @@ class printData:
         print('The max latency value in selected subset:', max_delay_value)
         print('The avg latency value in selected subset:', avg_delay_value)
         print(' ')
+        
+        '''
         print('List of BW', AvgBW)
         print('The min bw value in selected subset:', min_bw_value)
         print('The max bw value in selected subset:', max_bw_value)
@@ -519,11 +536,16 @@ class printData:
         print('The avg cost value in selected subset:', avg_cost_value)
         print('sum of the cost in selected subset:', round(getData.sum_list(AvgCost),2))
         print(' ')
+        '''
+        
         print('List of hops', Hop_No)
         print('The min no. of hops traversed in selected subset:', min_hop_value)
         print('The max no. of hops traversed in selected subset:', max_hop_value)
         print('The avg no. of hops traversed in selected subset:', avg_hop_value)
         print(' ')
+
+        #Print the path of selected nodes
+        #print (result)
 
 
 #Get Average Delay of the Selected Nodes:
