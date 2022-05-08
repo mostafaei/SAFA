@@ -20,6 +20,7 @@ import subprocess
 import json
 import random
 import copy
+import time
 
 
 class Graph:
@@ -537,11 +538,18 @@ class printData:
 #Result of the required Subset of nodes (DCM)
 def DCM(n,g):
     req_nodeSubset=int(n)
+    
     startNode=getFirstNode(g)
     startNode=startNode.firstNodeDCM().node
+    
     print("startNodeDCM:", startNode)
+    start_t=time.time()
     listNodes=nodeSubset(req_nodeSubset,startNode,g)
     result=listNodes.subSet_of_Nodes()
+    end_t=time.time()
+    run_t = ((end_t - start_t )* 1000)
+    
+    print("running time", round(run_t , 3), "ms") # round(time.time() * 1000
     final_path=list(result.iloc[-1].tail(2).head(1))
     final_path=final_path[0]
     final_path=final_path.split(",")
