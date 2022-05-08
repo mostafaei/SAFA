@@ -1,0 +1,32 @@
+Name: 
+Type: Graph
+Number of nodes: 30
+Number of edges: 64
+Average degree:   4.2667
+startNodeECM: 0
+running time 433.799 ms
+The Required Subset of Nodes: 8
+Selected Starting Node is:  0
+list of Selected Subset of Nodes:  ['0', '25', '16', '15', '18', '27', '17', '21']
+ 
+List of Delays [27.89, 31.39, 96.47, 69.34, 127.93, 156.53, 187.37, 59.28, 33.36, 97.23, 64.82, 93.42, 124.26, 127.86, 100.73, 159.32, 187.92, 218.76, 27.13, 31.46, 60.06, 90.9, 58.59, 87.19, 118.03, 28.6, 59.44, 30.84]
+The min latency value in selected subset: 27.13
+The max latency value in selected subset: 218.76
+The avg latency value in selected subset: 91.29
+ 
+List of BW [13.1, 12.2, 7.5, 10.6, 7.5, 7.5, 7.5, 12.2, 8.8, 10.6, 8.3, 8.3, 8.3, 7.5, 10.6, 7.5, 7.5, 7.5, 7.5, 8.3, 8.3, 8.3, 7.5, 7.5, 7.5, 9.3, 9.3, 11.5]
+The min bw value in selected subset: 7.5
+The max bw value in selected subset: 13.1
+The avg bw value in selected subset: 8.86
+ 
+List of Cost [0.13, 0.02, 0.11, 0.05, 0.27, 0.29, 0.5, 0.15, 0.23, 0.18, 0.39, 0.41, 0.62, 0.14, 0.07, 0.29, 0.31, 0.52, 0.06, 0.15, 0.18, 0.39, 0.22, 0.24, 0.45, 0.02, 0.23, 0.21]
+The min cost value in selected subset: 0.02
+The max cost value in selected subset: 0.62
+The avg cost value in selected subset: 0.24
+sum of the cost in selected subset: 6.83
+ 
+List of hops [1, 1, 2, 1, 2, 3, 2, 2, 1, 2, 2, 2, 2, 3, 2, 3, 2, 2, 1, 1, 2, 3, 2, 3, 3, 1, 2, 1]
+The min no. of hops traversed in selected subset: 1
+The max no. of hops traversed in selected subset: 3
+The avg no. of hops traversed in selected subset: 1.93
+ 

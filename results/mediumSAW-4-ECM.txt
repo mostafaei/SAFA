@@ -1,0 +1,32 @@
+Name: 
+Type: Graph
+Number of nodes: 30
+Number of edges: 64
+Average degree:   4.2667
+startNodeECM: 0
+running time 155.256 ms
+The Required Subset of Nodes: 4
+Selected Starting Node is:  0
+list of Selected Subset of Nodes:  ['0', '25', '16', '15']
+ 
+List of Delays [27.89, 31.39, 61.25, 59.28, 33.36, 92.64]
+The min latency value in selected subset: 27.89
+The max latency value in selected subset: 92.64
+The avg latency value in selected subset: 50.97
+ 
+List of BW [13.1, 12.2, 8.8, 12.2, 8.8, 8.8]
+The min bw value in selected subset: 8.8
+The max bw value in selected subset: 13.1
+The avg bw value in selected subset: 10.65
+ 
+List of Cost [0.13, 0.02, 0.36, 0.15, 0.23, 0.38]
+The min cost value in selected subset: 0.02
+The max cost value in selected subset: 0.38
+The avg cost value in selected subset: 0.21
+sum of the cost in selected subset: 1.27
+ 
+List of hops [1, 1, 2, 2, 1, 3]
+The min no. of hops traversed in selected subset: 1
+The max no. of hops traversed in selected subset: 3
+The avg no. of hops traversed in selected subset: 1.67
+ 
