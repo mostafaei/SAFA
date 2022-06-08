@@ -33,7 +33,7 @@ class Graph:
         print(nx.info(self.g))
 
         #Delay Calculation Among Nodes for TopologyZoo Networks
-        if (Topo=='largeSNR'or Topo=='mediumSNR' or Topo=='smallSNR' or Topo=='largeSAW'or Topo=='mediumSAW' or Topo=='smallSAW'):
+        if (Topo=='largeSNR'or Topo=='mediumSNR' or Topo=='smallSNR' or Topo=='largeSAW'or Topo=='mediumSAW' or Topo=='smallSAW' or Topo=='Geant-New'):
             True
         else:
             xml_tree    = ET.parse(Topo+'.graphml')
@@ -189,6 +189,7 @@ class jsonFile:
         self.g = g
         self.path= path
         self.Final_graph = Final_graph
+        self.ruleCounter=0
         
     def topologyJSON(self):
         final_obj = {}
@@ -263,6 +264,9 @@ class jsonFile:
         port = jsonFile.findDirectConnect(int(path[0]), int(path[1]), json_obj_links_switches)
         return port
 
+    def getRuleCounter(self):
+        return self.ruleCounter
+    
     def switchJSON(self):
         json_obj_links_switches = jsonFile.topologyJSON(self)
         nodes=self.g.nodes
@@ -287,6 +291,7 @@ class jsonFile:
             }]}
             if int(h) in restrictedList:
                 for n in restrictedList:
+                    self.ruleCounter+=1
                     if ( int(h) == int (n)):
                         host_ip = "10.0.%d.%d" % (int(n), int(n))
                         host_mac = ""
@@ -302,7 +307,8 @@ class jsonFile:
                                     "port": port
                                 }
                                 }
-                    else: 
+                    else:
+                        self.ruleCounter+=1
                         host_ip = "10.0.%d.%d" % (int(n), int(n))
                         host_mac = ""
                         host_mac = '08:00:00:00:%02x:00' % (int(n))
@@ -524,6 +530,7 @@ class printData:
         print('The max no. of hops traversed in selected subset:', max_hop_value)
         print('The avg no. of hops traversed in selected subset:', avg_hop_value)
         print(' ')
+        
 
 
 #Get Average Delay of the Selected Nodes:
@@ -547,20 +554,24 @@ def DCM(n,g):
     final_path=final_path.split(",")
     Final_graph = g.subgraph(final_path)
     printData(g, req_nodeSubset, startNode, final_path, Final_graph)
-    path_final  = list(Final_graph.node)
+    path_final  = list(Final_graph.nodes)
 
     #Provide dir. path to save JSON files for P4
     path=str('JsonFiles/')
     topoJSON=jsonFile(g, Final_graph, path)
     topo=topoJSON.topologyJSON()
     switchRule=topoJSON.switchJSON()
+    print('Total number of forwarding rules:', topoJSON.getRuleCounter())
+    print(' ')
     #print (result)  
 
 
 def main():
     #Select a graph from TopoloyZoo
     name_arg= sys.argv[1]
+    #name_arg="Geant-New.graphml"
     no_subSet_Arg1= sys.argv[2]
+    #no_subSet_Arg1=8
     x=int(no_subSet_Arg1)-1
     topo = str(name_arg.replace(".graphml", ""))
     g = nx.read_graphml(name_arg)
